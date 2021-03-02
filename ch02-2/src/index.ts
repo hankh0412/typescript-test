@@ -1,24 +1,22 @@
-let MAX_AGE = 100
+/*
+import IPerson from './person/IPerson'
+import Person, {makePerson} from './person/Person'
 
-interface IPerson {
-    name: string
-    age: number
+const testMakePerson = (): void => {
+  let jane: IPerson = makePerson("Jane");
+  let jack: IPerson = new Person("Jack");
+  console.log(jane, jack);
 }
+testMakePerson();
+*/
 
-class Person implements IPerson {
-    constructor(public name: string, public age: number) {}
-}
+import IPerson from './person/IPerson'
+import Person from './person/Person'
+import Chance from 'chance'
+import * as R from 'ramda'
 
-function makeRandomNumber(max: number = MAX_AGE): number {
-    return Math.ceil((Math.random()* max))
-}
-
-const makePerson = (name: string, age:number=makeRandomNumber()) => ({name, age})
-
-const testMakePerson = ():void => {
-    let jane: IPerson = makePerson('Jane')
-    let jack: IPerson = makePerson('Jack')
-    console.log(jane, jack)
-}
-
-testMakePerson()
+const chance = new Chance()
+let persons: IPerson[] = R.range(0, 2).map(
+  (n: number) => new Person(chance.name(), chance.age())
+)
+console.log(persons)
